@@ -1,4 +1,3 @@
-
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
@@ -17,7 +16,6 @@ const AuthCallback = () => {
 
       if (authRefresh.fulfilled.match(result)) {
         const meResult = await dispatch(getMe());
-        
 
         if (getMe.fulfilled.match(meResult)) {
           if (meResult.payload.user.role === "admin") {
@@ -26,7 +24,10 @@ const AuthCallback = () => {
             }, 1500);
           } else {
             timer = setTimeout(() => {
-              navigate("/admin/dashboard/6af48e9abfacf564ccf0a117/sessionsStudent/6af86f85441edd8d80d57889", { replace: true });
+              navigate(
+                "/admin/dashboard/6af48e9abfacf564ccf0a117/sessionsStudent/6af86f85441edd8d80d57889",
+                { replace: true },
+              );
             }, 1500);
           }
         }

@@ -424,33 +424,79 @@ function QuickActions() {
 }
 
 function NeedingAttention() {
+  const { courseId } = useParams();
+
+  const [students, setStudents] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    (async () => {
+      try {
+        setLoading(true);
+        setError("");
+
+        const response = await axiosInstance.get(
+          `/common/dashboard-todayPendingStudents/${courseId}`
+        );
+
+        setStudents(response.data.data);
+      } catch (err) {
+        setError(err.response?.data?.msg || "Failed to fetch students");
+      } finally {
+        setLoading(false);
+      }
+    })();
+  }, []);
+
   return (
     <section className={card}>
       <div className="mb-3 flex items-center justify-between">
         <h2 className="font-semibold">Student Activity</h2>
 
-        <span className="text-xs text-red-600">Needs attention</span>
+        <span className="text-xs text-red-600">
+          {students.length} Pending
+        </span>
       </div>
 
-      <ul className="space-y-3">
-        {ATTENTION.map((s) => (
-          <li key={s.name} className="flex items-center gap-3">
-            <div className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-slate-100 text-xs font-medium">
-              {s.initials}
-            </div>
+      {loading ? (
+        <p className="py-6 text-center text-sm text-slate-500">
+          Loading students...
+        </p>
+      ) : error ? (
+        <p className="py-6 text-center text-sm text-red-500">{error}</p>
+      ) : students.length === 0 ? (
+        <p className="py-6 text-center text-sm text-slate-500">
+          All students have submitted their audio.
+        </p>
+      ) : (
+        <ul className="space-y-3">
+          {students.map((student) => (
+            <li
+              key={student._id}
+              className="flex items-center gap-3 rounded-lg border border-slate-100 p-3"
+            >
+              <div className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-slate-100 text-sm font-medium text-slate-600">
+                {student.displayName?.charAt(0)?.toUpperCase() || "S"}
+              </div>
 
-            <div className="min-w-0 flex-1">
-              <p className="truncate text-sm font-medium">{s.name}</p>
+              <div className="min-w-0 flex-1">
+                <p className="truncate text-sm font-medium text-slate-800">
+                  {student.displayName}
+                </p>
 
-              <p className="text-xs text-slate-500">Listening: {s.listening}</p>
+                <p className="truncate text-xs text-slate-500">
+                  {student.email}
+                </p>
+              </div>
 
-              <p className="text-xs text-slate-500">
-                Recitation: {s.submission}
-              </p>
-            </div>
-          </li>
-        ))}
-      </ul>
+              <span className="shrink-0 rounded-full bg-red-50 px-2 py-1 text-xs font-medium text-red-600">
+                Audio Pending
+              </span>
+            </li>
+          ))}
+        </ul>
+      )}
     </section>
   );
 }
