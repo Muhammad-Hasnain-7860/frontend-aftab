@@ -31,7 +31,6 @@ function StudentChat() {
         setMessagesLoading(true);
         setMessagesError("");
 
-        // Interceptor 401 par refresh handle karega
         const response = await axiosInstance.get("/auth/me");
 
         const currentUser = response.data.data.user;
