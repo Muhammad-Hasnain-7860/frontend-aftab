@@ -208,6 +208,7 @@ function StudentChat() {
         },
       );
     } catch (error) {
+      console.log(error)
       setMessagesError("Audio sending failed");
       setSending(false);
       e.target.value = "";
