@@ -3,6 +3,7 @@ import { useParams } from "react-router";
 import { useSelector } from "react-redux";
 import { io } from "socket.io-client";
 import { axiosInstance } from "../../../app/api/axiosInstance";
+import AudioMessage from "./AudioMessage";
 
 function SessionChat() {
   const { sessionId, courseId } = useParams();
