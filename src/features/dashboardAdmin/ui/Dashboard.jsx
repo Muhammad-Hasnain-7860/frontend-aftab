@@ -354,37 +354,79 @@ function Progress({ label, value, pct, danger }) {
 }
 
 function SubmissionQueue() {
+  const { courseId } = useParams();
+
+  const [students, setStudents] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    (async () => {
+      try {
+        setLoading(true);
+        setError("");
+
+        const response = await axiosInstance.get(
+          `/common/dashboard-todaySubmission/${courseId}`,
+        );
+
+        setStudents(response.data.data);
+      } catch (err) {
+        setError(err.response?.data?.message || "Failed to fetch submissions");
+      } finally {
+        setLoading(false);
+      }
+    })();
+  }, []);
+
   return (
     <section className={card}>
       <div className="mb-4 flex items-center justify-between">
-        <h2 className="font-semibold">Recent Sabq Submissions</h2>
+        <h2 className="font-semibold">Today's Sabq Submissions</h2>
 
-        <button className="text-xs font-medium text-emerald-700">
-          View all
-        </button>
+        <span className="text-xs font-medium text-emerald-700">
+          {students.length} Submitted
+        </span>
       </div>
 
-      <ul className="divide-y divide-slate-100">
-        {SUBMISSIONS.map((s) => (
-          <li key={s.name} className="flex flex-wrap items-center gap-3 py-3">
-            <div className="grid h-9 w-9 place-items-center rounded-full bg-slate-100 text-sm font-medium text-slate-600">
-              {s.initials}
-            </div>
+      {loading ? (
+        <p className="py-6 text-center text-sm text-slate-500">
+          Loading submissions...
+        </p>
+      ) : error ? (
+        <p className="py-6 text-center text-sm text-red-500">{error}</p>
+      ) : students.length === 0 ? (
+        <p className="py-6 text-center text-sm text-slate-500">
+          No audio submissions yet.
+        </p>
+      ) : (
+        <ul className="divide-y divide-slate-100">
+          {students.map((student) => (
+            <li
+              key={student._id}
+              className="flex flex-wrap items-center gap-3 py-3"
+            >
+              <div className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-slate-100 text-sm font-medium text-slate-600">
+                {student.displayName?.charAt(0)?.toUpperCase() || "S"}
+              </div>
 
-            <div className="min-w-0 flex-1">
-              <p className="text-sm font-medium">{s.name}</p>
+              <div className="min-w-0 flex-1">
+                <p className="truncate text-sm font-medium">
+                  {student.displayName}
+                </p>
 
-              <p className="text-xs text-slate-500">
-                {s.session} · {s.time}
-              </p>
-            </div>
+                <p className="truncate text-xs text-slate-500">
+                  {student.email}
+                </p>
+              </div>
 
-            <span className="text-xs text-slate-500">{s.dur}</span>
-
-            <button className={btnPrimary}>Open</button>
-          </li>
-        ))}
-      </ul>
+              <span className="shrink-0 rounded-full bg-emerald-50 px-2 py-1 text-xs font-medium text-emerald-700">
+                Submitted
+              </span>
+            </li>
+          ))}
+        </ul>
+      )}
     </section>
   );
 }
@@ -437,7 +479,7 @@ function NeedingAttention() {
         setError("");
 
         const response = await axiosInstance.get(
-          `/common/dashboard-todayPendingStudents/${courseId}`
+          `/common/dashboard-todayPendingStudents/${courseId}`,
         );
 
         setStudents(response.data.data);
@@ -454,9 +496,7 @@ function NeedingAttention() {
       <div className="mb-3 flex items-center justify-between">
         <h2 className="font-semibold">Student Activity</h2>
 
-        <span className="text-xs text-red-600">
-          {students.length} Pending
-        </span>
+        <span className="text-xs text-red-600">{students.length} Pending</span>
       </div>
 
       {loading ? (
