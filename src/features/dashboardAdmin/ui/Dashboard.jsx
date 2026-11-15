@@ -221,14 +221,16 @@ function SessionCard() {
         setError("");
 
         const response = await axiosInstance.get(
-          `/common/dashboard-todayLecture/${courseId}`,
+          `/common/dashboard-todayLecture/${courseId}`
         );
 
-        console.log(response);
-
         setTodaySession(response.data.data);
-      } catch (error) {
-        setError(error.response?.data?.msg || error.message || error);
+      } catch (err) {
+        setError(
+          err.response?.data?.msg ||
+          err.message ||
+          "Failed to fetch today's sessions"
+        );
       } finally {
         setLoading(false);
       }
@@ -251,7 +253,7 @@ function SessionCard() {
     );
   }
 
-  if (todaySession.length === 0) {
+  if (!todaySession.length) {
     return (
       <p className="py-10 text-center text-sm text-slate-500">
         No sessions available today.
@@ -260,7 +262,7 @@ function SessionCard() {
   }
 
   return (
-    <>
+    <div className="space-y-4">
       {todaySession.map((session) => (
         <section key={session.sessionId} className={card}>
           <div className="flex flex-wrap items-start justify-between gap-3">
@@ -282,33 +284,16 @@ function SessionCard() {
                 Submission deadline: {session.submissionDeadline}
               </p>
             </div>
-
-            <button className="rounded-md border border-slate-200 px-3 py-1.5 text-sm hover:bg-slate-50">
-              View session
-            </button>
           </div>
 
-          <dl className="mt-5 grid gap-4 sm:grid-cols-3">
+          <dl className="mt-5 grid gap-4 sm:grid-cols-2">
             <Progress
-              label="Listening completed"
-              value={`${session.listeningCompleted.completed} / ${session.listeningCompleted.total} students`}
-              pct={
-                session.listeningCompleted.total
-                  ? (session.listeningCompleted.completed /
-                      session.listeningCompleted.total) *
-                    100
-                  : 0
-              }
-            />
-
-            <Progress
-              label="Recitations submitted"
+              label="Audio submissions"
               value={`${session.recitationsSubmitted.submitted} / ${session.recitationsSubmitted.total} students`}
               pct={
                 session.recitationsSubmitted.total
                   ? (session.recitationsSubmitted.submitted /
-                      session.recitationsSubmitted.total) *
-                    100
+                      session.recitationsSubmitted.total) * 100
                   : 0
               }
             />
@@ -319,8 +304,7 @@ function SessionCard() {
               pct={
                 session.recitationsSubmitted.total
                   ? (session.pendingSubmissions /
-                      session.recitationsSubmitted.total) *
-                    100
+                      session.recitationsSubmitted.total) * 100
                   : 0
               }
               danger
@@ -328,7 +312,7 @@ function SessionCard() {
           </dl>
         </section>
       ))}
-    </>
+    </div>
   );
 }
 
