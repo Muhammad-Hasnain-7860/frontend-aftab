@@ -35,9 +35,9 @@ function StudentChat() {
 
         const currentUser = response.data.data.user;
 
-        console.log(currentUser)
+        console.log(currentUser);
         dispatch(updateUser(currentUser));
-        console.log(accessToken)
+        console.log(accessToken);
 
         if (!accessToken || !currentUser) {
           setMessagesLoading(false);
@@ -61,9 +61,9 @@ function StudentChat() {
               studentId: currentUser.id,
             }),
             (response) => {
-              console.log(response.data)
+              console.log(response.data);
               if (response?.success) {
-                console.log(response)
+                console.log(response);
                 setMessages(response.data || []);
                 setMessagesError("");
               } else {
@@ -108,9 +108,7 @@ function StudentChat() {
           handleConnect();
         }
       } catch (error) {
-        setMessagesError(
-          error?.response?.data?.msg || "Authentication failed",
-        );
+        setMessagesError(error?.response?.data?.msg || "Authentication failed");
         setMessagesLoading(false);
       }
     };
@@ -197,9 +195,9 @@ function StudentChat() {
           audio,
         },
         (response) => {
-          console.log(response)
+          console.log(response);
           if (response?.success) {
-            console.log(response)
+            console.log(response);
             setMessages((prev) => [...prev, response.data]);
           } else {
             setMessagesError(response?.message || "Audio sending failed");
@@ -210,13 +208,12 @@ function StudentChat() {
         },
       );
     } catch (error) {
-      console.log(error)
+      console.log(error);
       setMessagesError("Audio sending failed");
       setSending(false);
       e.target.value = "";
     }
   };
-  
 
   return (
     <div className="h-[calc(100vh-100px)] bg-white border border-slate-200 rounded-xl overflow-hidden flex flex-col">
@@ -297,12 +294,13 @@ function StudentChat() {
           accept="audio/*"
           ref={audioInputRef}
           onChange={handleSendAudio}
+          disabled={messagesLoading || sending}
           className="hidden"
         />
 
         <button
           type="button"
-          disabled={sending}
+          disabled={messagesLoading || sending}
           onClick={() => audioInputRef.current?.click()}
           className="p-3 rounded-lg bg-slate-100 hover:bg-slate-200 disabled:opacity-50"
           title="Send audio"
@@ -312,15 +310,16 @@ function StudentChat() {
 
         <input
           type="text"
+          disabled={messagesLoading || sending}
           value={text}
           onChange={(e) => setText(e.target.value)}
           placeholder="Type a message..."
-          className="flex-1 border border-slate-300 rounded-lg px-4 py-3 outline-none focus:border-blue-500"
+          className="flex-1 border border-slate-300 rounded-lg px-4 py-3 outline-none focus:border-blue-500 disabled:opacity-50"
         />
 
         <button
           type="submit"
-          disabled={sending || !text.trim()}
+          disabled={messagesLoading || sending || !text.trim()}
           className="px-5 py-3 rounded-lg bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50"
         >
           Send
