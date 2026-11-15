@@ -68,13 +68,18 @@ function App() {
         setCredentials(response2.data.data);
       } catch (error) {
         setShowError(getErrorMessage(error));
-        setCredentials(false);
         axiosInstance
-          .get("/lecture/active-check", { headers: { Authorization: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhZWMzYTNhNzc5Y2MzYTUwNTg3YmI4MSIsInJvbGUiOiJzdHVkZW50Iiwic2Vzc2lvbklkIjoiNmFlYzNhM2E3NzljYzNhNTA1ODdiYjgyIiwiaWF0IjoxNzkzODY2Mjk4LCJleHAiOjE3OTM5NTI2OTh9.3ZSY_T5fXqsWguXIO2qfCh0cTlNmPBioSzub5nHp7AU" } })
+          .get("/lecture/active-check", {
+            headers: {
+              Authorization:
+                "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhZWMzYTNhNzc5Y2MzYTUwNTg3YmI4MSIsInJvbGUiOiJzdHVkZW50Iiwic2Vzc2lvbklkIjoiNmFlYzNhM2E3NzljYzNhNTA1ODdiYjgyIiwiaWF0IjoxNzkzODY2Mjk4LCJleHAiOjE3OTM5NTI2OTh9.3ZSY_T5fXqsWguXIO2qfCh0cTlNmPBioSzub5nHp7AU",
+            },
+          })
           .catch((e) => setShowError(getErrorMessage(e)));
+        setCredentials(false);
       }
     } catch (error) {
-     return setShowError(getErrorMessage(error));
+      return setShowError(getErrorMessage(error));
     } finally {
       isCreating.current = false;
       setCheck(false);
@@ -154,14 +159,14 @@ function App() {
             if (res.status === 202) {
               return setTimeout(() => poll(tries + 1), 10000);
             }
+            setCredentials(false);
           } catch (err) {
+            setCredentials(false);
             setShowError(getErrorMessage(err));
           }
         };
 
         poll();
-
-        setCredentials(false);
       },
 
       async onError(error) {
