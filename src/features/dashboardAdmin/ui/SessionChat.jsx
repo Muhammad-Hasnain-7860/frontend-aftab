@@ -155,6 +155,8 @@ function SessionChat() {
     setSending(true);
     setMessagesError("");
 
+    console.log(selectedStudent)
+
     socket.emit(
       "reply_message",
       JSON.stringify({

@@ -61,6 +61,7 @@ function StudentChat() {
               studentId: currentUser.id,
             }),
             (response) => {
+              console.log(response.data)
               if (response?.success) {
                 console.log(response)
                 setMessages(response.data || []);
