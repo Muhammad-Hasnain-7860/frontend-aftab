@@ -98,7 +98,7 @@ export default function Dashboard() {
             </div>
 
             <aside className="space-y-5">
-              <QuickActions />
+              {/* <QuickActions /> */}
               <NeedingAttention />
             </aside>
           </div>
@@ -415,39 +415,7 @@ function SubmissionQueue() {
   );
 }
 
-function QuickActions() {
-  const actions = [
-    {
-      title: "Upload new lecture",
-      sub: "Upload an audio lecture",
-    },
-    {
-      title: "Create lecture session",
-      sub: "Select lecture, date and deadline",
-    },
-  ];
 
-  return (
-    <section className={card}>
-      <h2 className="mb-3 font-semibold">Quick Actions</h2>
-
-      <ul className="space-y-2">
-        {actions.map((a) => (
-          <li key={a.title}>
-            <button className="flex w-full items-center justify-between rounded-md border border-slate-200 p-3 text-left text-sm hover:bg-slate-50">
-              <span>
-                <span className="block font-medium">{a.title}</span>
-                <span className="block text-xs text-slate-500">{a.sub}</span>
-              </span>
-
-              <span aria-hidden>→</span>
-            </button>
-          </li>
-        ))}
-      </ul>
-    </section>
-  );
-}
 
 function NeedingAttention() {
   const { courseId } = useParams();
