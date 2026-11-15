@@ -36,6 +36,7 @@ function StudentChat() {
 
         const currentUser = response.data.data.user;
 
+        console.log(currentUser)
         dispatch(updateUser(currentUser));
 
         if (!accessToken || !currentUser) {
@@ -106,7 +107,7 @@ function StudentChat() {
         }
       } catch (error) {
         setMessagesError(
-          error?.response?.data?.message || "Authentication failed",
+          error?.response?.data?.msg || "Authentication failed",
         );
         setMessagesLoading(false);
       }
@@ -195,6 +196,7 @@ function StudentChat() {
         },
         (response) => {
           if (response?.success) {
+            console.log(response)
             setMessages((prev) => [...prev, response.data]);
           } else {
             setMessagesError(response?.message || "Audio sending failed");
@@ -242,7 +244,7 @@ function StudentChat() {
 
             return (
               <div
-                key={message._id}
+                key={message?._id}
                 className={`flex mb-4 ${
                   isOwn ? "justify-end" : "justify-start"
                 }`}
