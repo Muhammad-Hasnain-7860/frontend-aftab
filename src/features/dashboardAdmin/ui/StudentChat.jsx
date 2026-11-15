@@ -196,6 +196,7 @@ function StudentChat() {
           audio,
         },
         (response) => {
+          console.log(response)
           if (response?.success) {
             console.log(response)
             setMessages((prev) => [...prev, response.data]);
