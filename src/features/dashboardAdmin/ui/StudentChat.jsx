@@ -44,7 +44,7 @@ function StudentChat() {
           return;
         }
 
-        socket = io("https://aftab-backend.vercel.app", {
+        socket = io("https://aftab-backend-yj45.vercel.app", {
           extraHeaders: {
             authorization: accessToken,
           },

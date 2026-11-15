@@ -27,7 +27,7 @@ function SessionChat() {
   useEffect(() => {
     if (!accessToken) return;
 
-    const socket = io("https://aftab-backend.vercel.app", {
+    const socket = io("https://aftab-backend-yj45.vercel.app", {
       extraHeaders: {
         authorization: accessToken,
       },
