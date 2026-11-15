@@ -7,7 +7,7 @@ export default function Auth() {
   const handleGoogleLogin = () => {
     setLoading(true);
 
-    window.location.href = `http://localhost:3000/api/auth/google`;
+    window.location.href = `https://aftab-backend.vercel.app/api/auth/google`;
   };
 
   return (
