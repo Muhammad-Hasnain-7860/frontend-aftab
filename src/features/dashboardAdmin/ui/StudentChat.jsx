@@ -62,6 +62,7 @@ function StudentChat() {
             }),
             (response) => {
               if (response?.success) {
+                console.log(response)
                 setMessages(response.data || []);
                 setMessagesError("");
               } else {
@@ -119,7 +120,7 @@ function StudentChat() {
       socket?.disconnect();
       socketRef.current = null;
     };
-  }, [accessToken, sessionId]);
+  }, []);
   // Send Text Message
   const handleSendMessage = (e) => {
     e.preventDefault();
