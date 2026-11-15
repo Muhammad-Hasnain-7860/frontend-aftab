@@ -121,7 +121,7 @@ function StudentChat() {
       socket?.disconnect();
       socketRef.current = null;
     };
-  }, []);
+  }, [accessToken]);
   // Send Text Message
   const handleSendMessage = (e) => {
     e.preventDefault();
