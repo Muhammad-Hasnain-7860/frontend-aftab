@@ -38,6 +38,7 @@ function StudentChat() {
 
         console.log(currentUser)
         dispatch(updateUser(currentUser));
+        console.log(accessToken)
 
         if (!accessToken || !currentUser) {
           setMessagesLoading(false);
