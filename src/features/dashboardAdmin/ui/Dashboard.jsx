@@ -81,9 +81,7 @@ export default function Dashboard() {
   }, [courseId]);
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-800 md:flex">
-      {/* <Sidebar /> */}
-
+    <div className="min-h-screen bg-slate-50 text-slate-800">
       <div className="min-w-0 flex-1">
         <Topbar />
 
