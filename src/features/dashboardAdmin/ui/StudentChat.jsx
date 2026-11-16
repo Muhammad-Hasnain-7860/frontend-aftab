@@ -216,15 +216,15 @@ function StudentChat() {
   };
 
   return (
-    <div className="h-[calc(100vh-100px)] bg-white border border-slate-200 rounded-xl overflow-hidden flex flex-col">
+    <div className="h-[calc(100vh-82px)] sm:h-[calc(100vh-100px)] bg-white border border-slate-200 rounded-xl overflow-hidden flex flex-col">
       {/* Chat Header */}
-      <div className="p-4 border-b border-slate-200">
-        <h3 className="font-semibold text-slate-800">Session Chat</h3>
-        <p className="text-xs text-slate-500">Session: {sessionId}</p>
+      <div className="p-3 sm:p-4 border-b border-slate-200">
+        <h3 className="font-semibold text-slate-800 text-base sm:text-lg">Session Chat</h3>
+        <p className="text-[11px] sm:text-xs text-slate-500">Session: {sessionId}</p>
       </div>
 
       {/* Messages */}
-      <div className="flex-1 overflow-y-auto p-5 bg-slate-50">
+      <div className="flex-1 overflow-y-auto p-3 sm:p-5 bg-slate-50">
         {messagesLoading ? (
           <div className="h-full flex items-center justify-center text-slate-500">
             Loading messages...
@@ -251,7 +251,7 @@ function StudentChat() {
                 }`}
               >
                 <div
-                  className={`max-w-[75%] rounded-xl px-4 py-3 shadow-sm ${
+                  className={`max-w-[85%] sm:max-w-[75%] rounded-xl px-3 py-2.5 sm:px-4 sm:py-3 shadow-sm ${
                     isOwn
                       ? "bg-blue-600 text-white"
                       : "bg-white text-slate-800 border border-slate-200"
@@ -287,7 +287,7 @@ function StudentChat() {
       {/* Message Input */}
       <form
         onSubmit={handleSendMessage}
-        className="p-4 border-t border-slate-200 flex items-center gap-3"
+        className="p-3 sm:p-4 border-t border-slate-200 flex flex-col gap-2.5 sm:flex-row sm:items-center"
       >
         <input
           type="file"
@@ -298,32 +298,34 @@ function StudentChat() {
           className="hidden"
         />
 
-        <button
-          type="button"
-          disabled={messagesLoading || sending}
-          onClick={() => audioInputRef.current?.click()}
-          className="p-3 rounded-lg bg-slate-100 hover:bg-slate-200 disabled:opacity-50"
-          title="Send audio"
-        >
-          🎤
-        </button>
+        <div className="flex items-center gap-2 sm:gap-3 w-full">
+          <button
+            type="button"
+            disabled={messagesLoading || sending}
+            onClick={() => audioInputRef.current?.click()}
+            className="p-2.5 sm:p-3 rounded-lg bg-slate-100 hover:bg-slate-200 disabled:opacity-50 shrink-0"
+            title="Send audio"
+          >
+            🎤
+          </button>
 
-        <input
-          type="text"
-          disabled={messagesLoading || sending}
-          value={text}
-          onChange={(e) => setText(e.target.value)}
-          placeholder="Type a message..."
-          className="flex-1 border border-slate-300 rounded-lg px-4 py-3 outline-none focus:border-blue-500 disabled:opacity-50"
-        />
+          <input
+            type="text"
+            disabled={messagesLoading || sending}
+            value={text}
+            onChange={(e) => setText(e.target.value)}
+            placeholder="Type a message..."
+            className="flex-1 w-full border border-slate-300 rounded-lg px-3 py-2.5 sm:px-4 sm:py-3 outline-none focus:border-blue-500 disabled:opacity-50 text-sm sm:text-base"
+          />
 
-        <button
-          type="submit"
-          disabled={messagesLoading || sending || !text.trim()}
-          className="px-5 py-3 rounded-lg bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50"
-        >
-          Send
-        </button>
+          <button
+            type="submit"
+            disabled={messagesLoading || sending || !text.trim()}
+            className="px-4 py-2.5 sm:px-5 sm:py-3 rounded-lg bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 shrink-0 text-sm sm:text-base"
+          >
+            Send
+          </button>
+        </div>
       </form>
     </div>
   );
