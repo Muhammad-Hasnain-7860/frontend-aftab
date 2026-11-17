@@ -17,6 +17,14 @@ const Sidebar = () => {
       label: "All Sessions",
       path: `/admin/dashboard/${courseId}/sessions`,
     },
+    {
+      label: "Students",
+      path: `/admin/dashboard/${courseId}/students`,
+    },
+    {
+      label: "Marks",
+      path: `/admin/dashboard/${courseId}/marks`,
+    },
   ];
 
   return (

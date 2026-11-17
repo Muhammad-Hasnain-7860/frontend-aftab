@@ -10,6 +10,8 @@ import DashboardLayout from "../layout/DashboardLayout.jsx";
 import AllLectureSession from "../../features/dashboardAdmin/ui/Session.jsx";
 import SessionChat from "../../features/dashboardAdmin/ui/SessionChat.jsx";
 import StudentChat from "../../features/dashboardAdmin/ui/StudentChat.jsx";
+import Students from "../../features/dashboardAdmin/ui/Students.jsx";
+import Marks from "../../features/dashboardAdmin/ui/Marks.jsx";
 import {
   AuthBootstrap,
   RedirectAuthenticatedUser,
@@ -43,6 +45,14 @@ export const router = createBrowserRouter([
           {
             path: "sessions",
             element: <AllLectureSession />,
+          },
+          {
+            path: "students",
+            element: <Students />,
+          },
+          {
+            path: "marks",
+            element: <Marks />,
           },
           {
             path: "sessions/:sessionId",
