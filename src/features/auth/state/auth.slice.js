@@ -6,6 +6,7 @@ const initialState = {
   accessToken: null,
   loading: false,
   isAuthenticated: false,
+  initialized: false,
   error: null,
 };
 
@@ -17,13 +18,15 @@ const authSlice = createSlice({
       state.user = null;
       state.accessToken = null;
       state.isAuthenticated = false;
+      state.initialized = true;
+      state.error = null;
     },
-  },
-
-  reducers : {
-    updateUser : (state , action)=>{
-      state.user = action.payload
-    }
+    updateUser: (state, action) => {
+      state.user = action.payload;
+      state.isAuthenticated = Boolean(action.payload);
+      state.initialized = true;
+      state.error = null;
+    },
   },
 
   extraReducers: (builder) => {
@@ -43,20 +46,23 @@ const authSlice = createSlice({
 
       .addCase(getMe.pending, (state) => {
         state.loading = true;
+        state.error = null;
       })
       .addCase(getMe.fulfilled, (state, action) => {
         state.loading = false;
-        state.user = action.payload;
+        state.user = action.payload.user;
         state.isAuthenticated = true;
+        state.initialized = true;
       })
       .addCase(getMe.rejected, (state, action) => {
-        state.loading = false;      
+        state.loading = false;
+        state.user = null;
+        state.isAuthenticated = false;
+        state.initialized = true;
         state.error = action.payload;
       });
   },
 });
 
-export const {updateUser} = authSlice.actions
-
-export const { logout } = authSlice.actions;
+export const { updateUser, logout } = authSlice.actions;
 export default authSlice.reducer;

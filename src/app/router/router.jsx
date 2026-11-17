@@ -1,11 +1,7 @@
 import { createBrowserRouter } from "react-router";
 import App from "../../App.jsx";
-// import Send from "../../Send.jsx";
-// import Audio from "../../Audio.jsx";
-import ChatMessages from "../../ChatMessage.jsx";
 import Dashboard from "../../features/dashboardAdmin/ui/Dashboard.jsx";
 import Courses from "../../features/courses/ui/Courses.jsx";
-import Auth from "../../features/auth/ui/Auth.jsx";
 import AuthCallback from "../../features/auth/ui/AuthCallback.jsx";
 import CreateCourse from "../../features/courses/ui/CreateCourse.jsx";
 import LectureUpload from "../../features/lecture/ui/LectureUpload.jsx";
@@ -14,57 +10,82 @@ import DashboardLayout from "../layout/DashboardLayout.jsx";
 import AllLectureSession from "../../features/dashboardAdmin/ui/Session.jsx";
 import SessionChat from "../../features/dashboardAdmin/ui/SessionChat.jsx";
 import StudentChat from "../../features/dashboardAdmin/ui/StudentChat.jsx";
+import {
+  AuthBootstrap,
+  RedirectAuthenticatedUser,
+  RequireAdmin,
+} from "./AuthGuards.jsx";
 
 export const router = createBrowserRouter([
   {
-    path: "/",
-    element: <App />,
-  },
-
-  {
-  path: "/admin/dashboard/:courseId",
-  element: <DashboardLayout />,
-  children: [
-    {
-      path: "lectures",
-      element: <AllLecture />,
-    },
-    {
-      path: "",
-      element: <Dashboard />,
-    },
-     {
-      path: "sessions",
-      element: <AllLectureSession />,
-    },
-    {
-      path: "sessions/:sessionId",
-      element: <SessionChat />,
-    },
-    {
-      path : 'sessionsStudent/:sessionId',
-      element : <StudentChat />
-    },
-  ],
-},
-  {
-    path: "/admin/courses",
-    element: <Courses />,
-  },
-  {
-    path: "/auth",
-    element: <Auth />,
-  },
-  {
-    path: "/auth/callback",
-    element: <AuthCallback />,
-  },
-  {
-    path: "/admin/courses/create",
-    element: <CreateCourse />,
-  },
-  {
-    path: "/admin/lectureupload/:courseId",
-    element: <LectureUpload />,
+    element: <AuthBootstrap />,
+    children: [
+      {
+        path: "/",
+        element: <App />,
+      },
+      {
+        path: "/admin/dashboard/:courseId",
+        element: (
+          <RequireAdmin>
+            <DashboardLayout />
+          </RequireAdmin>
+        ),
+        children: [
+          {
+            path: "lectures",
+            element: <AllLecture />,
+          },
+          {
+            path: "",
+            element: <Dashboard />,
+          },
+          {
+            path: "sessions",
+            element: <AllLectureSession />,
+          },
+          {
+            path: "sessions/:sessionId",
+            element: <SessionChat />,
+          },
+        ],
+      },
+      {
+        path: "/admin/courses",
+        element: (
+          <RequireAdmin>
+            <Courses />
+          </RequireAdmin>
+        ),
+      },
+      {
+        path: "/admin/courses/create",
+        element: (
+          <RequireAdmin>
+            <CreateCourse />
+          </RequireAdmin>
+        ),
+      },
+      {
+        path: "/admin/lectureupload/:courseId",
+        element: (
+          <RequireAdmin>
+            <LectureUpload />
+          </RequireAdmin>
+        ),
+      },
+      {
+        path: "/auth",
+        element: <RedirectAuthenticatedUser />,
+      },
+      {
+        path: "/auth/callback",
+        element: <AuthCallback />,
+      },
+      {
+        path: "/admin/dashboard/:courseId/sessionsStudent/:sessionId",
+        element: <StudentChat />,
+      },
+    ],
   },
 ]);
