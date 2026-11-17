@@ -1,10 +1,9 @@
 import { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { io } from "socket.io-client";
 import AudioMessage from "./AudioMessage";
-import { axiosInstance } from "../../../app/api/axiosInstance";
-import { updateUser } from "../../auth/state/auth.slice";
+
 function StudentChat() {
   const { sessionId } = useParams();
 
@@ -18,108 +17,80 @@ function StudentChat() {
   const [sending, setSending] = useState(false);
   const [messagesError, setMessagesError] = useState("");
 
-  const dispatch = useDispatch();
   const { accessToken, user } = useSelector((state) => state.auth);
 
   useEffect(() => {
-    if (!sessionId) return;
+    if (!sessionId || !accessToken || !user?.id) {
+      setMessagesLoading(false);
+      return;
+    }
 
-    let socket;
+    setMessagesLoading(true);
+    setMessagesError("");
 
-    const connectSocket = async () => {
-      try {
-        setMessagesLoading(true);
-        setMessagesError("");
+    const socket = io("https://aftab-backend-yj45.vercel.app", {
+      extraHeaders: {
+        authorization: accessToken,
+      },
+    });
 
-        const response = await axiosInstance.get("/auth/me");
+    socketRef.current = socket;
 
-        const currentUser = response.data.data.user;
-
-        console.log(currentUser);
-        dispatch(updateUser(currentUser));
-        console.log(accessToken);
-
-        if (!accessToken || !currentUser) {
-          setMessagesLoading(false);
-          return;
-        }
-
-        socket = io("https://aftab-backend-yj45.vercel.app", {
-          extraHeaders: {
-            authorization: accessToken,
-          },
-        });
-
-        socketRef.current = socket;
-
-        // Fetch Messages
-        const handleConnect = () => {
-          socket.emit(
-            "fetch_messages",
-            JSON.stringify({
-              sessionId,
-              studentId: currentUser.id,
-            }),
-            (response) => {
-              console.log(response.data);
-              if (response?.success) {
-                console.log(response);
-                setMessages(response.data || []);
-                setMessagesError("");
-              } else {
-                setMessagesError(
-                  response?.message || "Failed to load messages",
-                );
-              }
-
-              setMessagesLoading(false);
-            },
-          );
-        };
-
-        // Receive Admin Messages
-        const handleReceiveMessage = (message) => {
-          const messageSessionId = String(message.lectureSessionId);
-          const receiverId = message.receiverId
-            ? String(message.receiverId)
-            : null;
-
-          const isCurrentSession = messageSessionId === String(sessionId);
-
-          const isAdminMessage = receiverId === String(currentUser.id);
-
-          if (isCurrentSession && isAdminMessage) {
-            setMessages((prev) => {
-              const alreadyExists = prev.some(
-                (item) => String(item._id) === String(message._id),
-              );
-
-              if (alreadyExists) return prev;
-
-              return [...prev, message];
-            });
+    // Fetch Messages
+    const handleConnect = () => {
+      socket.emit(
+        "fetch_messages",
+        JSON.stringify({
+          sessionId,
+          studentId: user.id,
+        }),
+        (response) => {
+          if (response?.success) {
+            setMessages(response.data || []);
+            setMessagesError("");
+          } else {
+            setMessagesError(response?.message || "Failed to load messages");
           }
-        };
 
-        socket.on("connect", handleConnect);
-        socket.on("receive_message", handleReceiveMessage);
+          setMessagesLoading(false);
+        },
+      );
+    };
 
-        if (socket.connected) {
-          handleConnect();
-        }
-      } catch (error) {
-        setMessagesError(error?.response?.data?.msg || "Authentication failed");
-        setMessagesLoading(false);
+    // Receive Admin Messages
+    const handleReceiveMessage = (message) => {
+      const messageSessionId = String(message.lectureSessionId);
+      const receiverId = message.receiverId ? String(message.receiverId) : null;
+
+      const isCurrentSession = messageSessionId === String(sessionId);
+
+      const isAdminMessage = receiverId === String(user.id);
+
+      if (isCurrentSession && isAdminMessage) {
+        setMessages((prev) => {
+          const alreadyExists = prev.some(
+            (item) => String(item._id) === String(message._id),
+          );
+
+          if (alreadyExists) return prev;
+
+          return [...prev, message];
+        });
       }
     };
 
-    connectSocket();
+    socket.on("connect", handleConnect);
+    socket.on("receive_message", handleReceiveMessage);
+
+    if (socket.connected) {
+      handleConnect();
+    }
 
     return () => {
-      socket?.disconnect();
+      socket.disconnect();
       socketRef.current = null;
     };
-  }, [accessToken]);
+  }, [accessToken, sessionId, user?.id]);
   // Send Text Message
   const handleSendMessage = (e) => {
     e.preventDefault();
