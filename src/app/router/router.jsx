@@ -1,4 +1,4 @@
-import { createBrowserRouter } from "react-router";
+import { createBrowserRouter, Navigate } from "react-router";
 import App from "../../App.jsx";
 import Dashboard from "../../features/dashboardAdmin/ui/Dashboard.jsx";
 import Courses from "../../features/courses/ui/Courses.jsx";
@@ -9,15 +9,19 @@ import AllLecture from "../../features/dashboardAdmin/ui/AllLecture.jsx";
 import DashboardLayout from "../layout/DashboardLayout.jsx";
 import AllLectureSession from "../../features/dashboardAdmin/ui/Session.jsx";
 import SessionChat from "../../features/dashboardAdmin/ui/SessionChat.jsx";
-import StudentChat from "../../features/dashboardAdmin/ui/StudentChat.jsx";
 import Students from "../../features/dashboardAdmin/ui/Students.jsx";
 import Marks from "../../features/dashboardAdmin/ui/Marks.jsx";
 import Deadlines from "../../features/dashboardAdmin/ui/Deadlines.jsx";
 import StudentAccess from "../../features/dashboardAdmin/ui/StudentAccess.jsx";
+import StudentChat from "../../features/studentDashboard/ui/StudentChat.jsx";
+import StudentDashboard from "../../features/studentDashboard/ui/StudentDashboard.jsx";
+import StudentCourse from "../../features/studentDashboard/ui/StudentCourse.jsx";
+import StudentLayout from "../../features/studentDashboard/ui/StudentLayout.jsx";
 import {
   AuthBootstrap,
   RedirectAuthenticatedUser,
   RequireAdmin,
+  RequireStudent,
 } from "./AuthGuards.jsx";
 
 export const router = createBrowserRouter([
@@ -95,6 +99,32 @@ export const router = createBrowserRouter([
         ),
       },
       {
+        path: "/student",
+        element: (
+          <RequireStudent>
+            <StudentLayout />
+          </RequireStudent>
+        ),
+        children: [
+          {
+            index: true,
+            element: <Navigate to="dashboard" replace />,
+          },
+          {
+            path: "dashboard",
+            element: <StudentDashboard />,
+          },
+          {
+            path: "courses/:courseId",
+            element: <StudentCourse />,
+          },
+          {
+            path: "courses/:courseId/sessions/:sessionId",
+            element: <StudentChat />,
+          },
+        ],
+      },
+      {
         path: "/auth",
         element: <RedirectAuthenticatedUser />,
       },
@@ -104,7 +134,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "/admin/dashboard/:courseId/sessionsStudent/:sessionId",
-        element: <StudentChat />,
+        element: <Navigate to="/student/dashboard" replace />,
       },
     ],
   },

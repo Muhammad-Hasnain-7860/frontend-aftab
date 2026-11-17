@@ -4,9 +4,6 @@ import { Navigate, Outlet, useLocation } from "react-router";
 import { getMe } from "../../features/auth/apis/auth.thunk.js";
 import Auth from "../../features/auth/ui/Auth.jsx";
 
-const STUDENT_CHAT_PATH =
-  "/admin/dashboard/6af48e9abfacf564ccf0a117/sessionsStudent/6af86f85441edd8d80d57889";
-
 export function AuthBootstrap() {
   const dispatch = useDispatch();
   const location = useLocation();
@@ -49,6 +46,19 @@ export function RequireAdmin({ children }) {
   return children || <Outlet />;
 }
 
+export function RequireStudent({ children }) {
+  const { user, initialized } = useSelector((state) => state.auth);
+
+  if (!initialized) return <RouteLoading />;
+  if (!user) return <Navigate to="/auth" replace />;
+  if (user.role === "admin") {
+    return <Navigate to="/admin/courses" replace />;
+  }
+  if (user?.role !== "user") return <Navigate to="/auth" replace />;
+
+  return children || <Outlet />;
+}
+
 export function RedirectAuthenticatedUser() {
   const { user, initialized } = useSelector((state) => state.auth);
 
@@ -57,7 +67,7 @@ export function RedirectAuthenticatedUser() {
 
   return (
     <Navigate
-      to={user.role === "admin" ? "/admin/courses" : STUDENT_CHAT_PATH}
+      to={user.role === "admin" ? "/admin/courses" : "/student"}
       replace
     />
   );

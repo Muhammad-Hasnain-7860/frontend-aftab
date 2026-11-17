@@ -1,11 +1,11 @@
 import { useEffect, useState, useRef } from "react";
-import { useParams } from "react-router";
+import { Link, useParams } from "react-router";
 import { useSelector } from "react-redux";
 import { io } from "socket.io-client";
-import AudioMessage from "./AudioMessage";
+import AudioMessage from "../../dashboardAdmin/ui/AudioMessage";
 
 function StudentChat() {
-  const { sessionId } = useParams();
+  const { courseId, sessionId } = useParams();
 
   const socketRef = useRef(null);
   const audioInputRef = useRef(null);
@@ -189,9 +189,17 @@ function StudentChat() {
   return (
     <div className="h-[calc(100vh-82px)] sm:h-[calc(100vh-100px)] bg-white border border-slate-200 rounded-xl overflow-hidden flex flex-col">
       {/* Chat Header */}
-      <div className="p-3 sm:p-4 border-b border-slate-200">
-        <h3 className="font-semibold text-slate-800 text-base sm:text-lg">Session Chat</h3>
-        <p className="text-[11px] sm:text-xs text-slate-500">Session: {sessionId}</p>
+      <div className="flex items-center gap-3 border-b border-slate-200 p-3 sm:p-4">
+        <Link
+          to={`/student/courses/${courseId}`}
+          className="shrink-0 rounded-lg bg-slate-100 px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-200"
+        >
+          ← Course
+        </Link>
+        <div className="min-w-0">
+          <h3 className="font-semibold text-slate-800 text-base sm:text-lg">Session Chat</h3>
+          <p className="truncate text-[11px] sm:text-xs text-slate-500">Session: {sessionId}</p>
+        </div>
       </div>
 
       {/* Messages */}

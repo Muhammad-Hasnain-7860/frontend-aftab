@@ -24,10 +24,7 @@ const AuthCallback = () => {
             }, 1500);
           } else {
             timer = setTimeout(() => {
-              navigate(
-                "/admin/dashboard/6af48e9abfacf564ccf0a117/sessionsStudent/6af86f85441edd8d80d57889",
-                { replace: true },
-              );
+              navigate("/student/dashboard", { replace: true });
             }, 1500);
           }
         }
