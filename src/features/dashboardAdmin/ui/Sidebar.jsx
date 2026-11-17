@@ -29,6 +29,10 @@ const Sidebar = () => {
       label: "Deadlines",
       path: `/admin/dashboard/${courseId}/deadlines`,
     },
+    {
+      label: "Student Access",
+      path: `/admin/dashboard/${courseId}/student-access`,
+    },
   ];
 
   return (
