@@ -5,7 +5,7 @@ const useAuth = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm();
 
   const handleError = () => {
@@ -20,6 +20,7 @@ const useAuth = () => {
     register,
     handleSubmit,
     handleError,
+    isSubmitting,
   };
 };
 

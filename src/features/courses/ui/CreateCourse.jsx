@@ -2,10 +2,11 @@ import { useState } from "react";
 import { useNavigate } from "react-router";
 import useAuth from "../hook/useAuth";
 import { axiosInstance } from "../../../app/api/axiosInstance";
+import toast from "react-hot-toast";
 
 const CreateCourse = () => {
   const navigate = useNavigate();
-  const { register, handleSubmit, handleError } = useAuth();
+  const { register, handleSubmit, handleError, isSubmitting } = useAuth();
   const [preview, setPreview] = useState(null);
   const [thumbnail, setThumbnail] = useState(null);
   const [error, setError] = useState("");
@@ -282,9 +283,10 @@ const CreateCourse = () => {
 
             <button
               type="submit"
-              className="rounded-xl bg-emerald-600 px-7 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-emerald-700 active:scale-[0.98]"
+              disabled={isSubmitting}
+              className="rounded-xl bg-emerald-600 px-7 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-emerald-700 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60"
             >
-              Create Course
+              {isSubmitting ? "Creating..." : "Create Course"}
             </button>
           </div>
         </form>
