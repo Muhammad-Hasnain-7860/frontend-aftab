@@ -12,6 +12,7 @@ import SessionChat from "../../features/dashboardAdmin/ui/SessionChat.jsx";
 import StudentChat from "../../features/dashboardAdmin/ui/StudentChat.jsx";
 import Students from "../../features/dashboardAdmin/ui/Students.jsx";
 import Marks from "../../features/dashboardAdmin/ui/Marks.jsx";
+import Deadlines from "../../features/dashboardAdmin/ui/Deadlines.jsx";
 import {
   AuthBootstrap,
   RedirectAuthenticatedUser,
@@ -53,6 +54,10 @@ export const router = createBrowserRouter([
           {
             path: "marks",
             element: <Marks />,
+          },
+          {
+            path: "deadlines",
+            element: <Deadlines />,
           },
           {
             path: "sessions/:sessionId",

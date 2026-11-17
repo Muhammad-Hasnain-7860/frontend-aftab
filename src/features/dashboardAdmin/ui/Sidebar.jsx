@@ -25,6 +25,10 @@ const Sidebar = () => {
       label: "Marks",
       path: `/admin/dashboard/${courseId}/marks`,
     },
+    {
+      label: "Deadlines",
+      path: `/admin/dashboard/${courseId}/deadlines`,
+    },
   ];
 
   return (
