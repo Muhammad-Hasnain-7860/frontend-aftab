@@ -69,12 +69,6 @@ function AllLecture() {
           </p>
         </div>
 
-        <button
-          onClick={() => navigate('/admin/upload-lecture')}
-          className="bg-emerald-700 hover:bg-emerald-800 text-white px-5 py-3 rounded-xl font-medium transition"
-        >
-          + Upload Lecture
-        </button>
       </div>
 
       {/* Stats */}
