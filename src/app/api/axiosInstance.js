@@ -2,7 +2,7 @@ import axios from "axios";
 import { authRefresh } from "../../features/auth/apis/auth.thunk";
 
 export const axiosInstance = axios.create({
-  baseURL: "https://aftab-backend-yj45.vercel.app/api",
+  baseURL: "https://aftab-backend.ethiodeploy.app/api",
   withCredentials: true,
 });
 

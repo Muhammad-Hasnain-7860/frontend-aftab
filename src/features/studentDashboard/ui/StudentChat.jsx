@@ -28,7 +28,7 @@ function StudentChat() {
     setMessagesLoading(true);
     setMessagesError("");
 
-    const socket = io("https://aftab-backend-yj45.vercel.app", {
+    const socket = io("https://aftab-backend.ethiodeploy.app", {
       extraHeaders: {
         authorization: accessToken,
       },
