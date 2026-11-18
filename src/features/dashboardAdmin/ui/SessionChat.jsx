@@ -20,6 +20,7 @@ function SessionChat() {
   const [studentsLoading, setStudentsLoading] = useState(true);
   const [messagesLoading, setMessagesLoading] = useState(false);
   const [sending, setSending] = useState(false);
+  const [sendingAudio, setSendingAudio] = useState(false);
 
   const [studentsError, setStudentsError] = useState("");
   const [messagesError, setMessagesError] = useState("");
@@ -204,6 +205,7 @@ function SessionChat() {
 
     try {
       setSending(true);
+      setSendingAudio(true);
       setMessagesError("");
 
       const audio = await file.arrayBuffer();
@@ -225,12 +227,14 @@ function SessionChat() {
           }
 
           setSending(false);
+          setSendingAudio(false);
           e.target.value = "";
         },
       );
     } catch (error) {
       setMessagesError("Audio sending failed");
       setSending(false);
+      setSendingAudio(false);
       e.target.value = "";
     }
   };
@@ -401,8 +405,15 @@ function SessionChat() {
                   type="text"
                   value={text}
                   onChange={(e) => setText(e.target.value)}
-                  placeholder="Type a message..."
-                  className="flex-1 w-full border border-slate-300 rounded-lg px-3 py-2.5 sm:px-4 sm:py-3 outline-none focus:border-blue-500 text-sm sm:text-base"
+                  disabled={sending}
+                  placeholder={
+                    sendingAudio
+                      ? "Uploading audio..."
+                      : sending
+                        ? "Sending message..."
+                        : "Type a message..."
+                  }
+                  className="flex-1 w-full border border-slate-300 rounded-lg px-3 py-2.5 sm:px-4 sm:py-3 outline-none focus:border-blue-500 text-sm sm:text-base disabled:cursor-not-allowed disabled:bg-slate-100 disabled:opacity-70"
                 />
 
                 <button
@@ -410,9 +421,18 @@ function SessionChat() {
                   disabled={sending || !text.trim()}
                   className="px-4 py-2.5 sm:px-5 sm:py-3 rounded-lg bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 shrink-0 text-sm sm:text-base"
                 >
-                  Send
+                  {sendingAudio
+                    ? "Uploading..."
+                    : sending
+                      ? "Sending..."
+                      : "Send"}
                 </button>
               </div>
+              {sendingAudio && (
+                <p role="status" className="text-xs text-slate-500">
+                  Audio upload ho rahi hai...
+                </p>
+              )}
             </form>
           </>
         ) : (
