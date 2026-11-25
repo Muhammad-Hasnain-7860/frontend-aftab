@@ -512,11 +512,7 @@ function PublicWebsite() {
           </div>
         </div>
 
-        <div className="border-t border-emerald-800">
-          <div className="mx-auto max-w-7xl px-4 py-4 text-xs text-emerald-200 sm:px-6 lg:px-8">
-            © {currentYear} Aftab Islamic Academy
-          </div>
-        </div>
+     
       </footer>
 
       <a
