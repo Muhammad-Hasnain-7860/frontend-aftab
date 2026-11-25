@@ -202,8 +202,8 @@ function PublicWebsite() {
                 Tajweed Quran
               </p>
               <p className="mt-2 text-sm leading-6 text-slate-600">
-                Learn pronunciation and recitation rules with Qaris who have
-                5–10 years of Tajweed-teaching experience.
+                Learn pronunciation and recitation rules with Qari Aftab, who
+                has 20 years of Quran-teaching experience.
               </p>
             </article>
             <article className="py-6 sm:px-6 sm:py-7">
@@ -415,10 +415,10 @@ function PublicWebsite() {
               </h2>
               <p className="mt-4 text-sm leading-7 text-slate-600 sm:text-base">
                 Qari Aftab founded the academy to help students learn Quran
-                recitation with Tajweed and pursue Hifz. A skilled Qari with
-                experience in both, he teaches students in person and online.
-                The academy also brings together Qaris with 5–10 years of
-                Tajweed-teaching experience.
+                recitation with Tajweed and pursue Hifz. He has 20 years of
+                Quran-teaching experience and has completed the Muallim
+                Tajweed-o-Qira&apos;at Course. He teaches students online and in
+                person.
               </p>
               <div className="mt-6 flex flex-wrap gap-2">
                 <span className="border border-slate-300 bg-white px-3 py-2 text-xs font-medium text-slate-700">
@@ -426,6 +426,9 @@ function PublicWebsite() {
                 </span>
                 <span className="border border-slate-300 bg-white px-3 py-2 text-xs font-medium text-slate-700">
                   Quran Hifz
+                </span>
+                <span className="border border-slate-300 bg-white px-3 py-2 text-xs font-medium text-slate-700">
+                  Muallim Tajweed-o-Qira&apos;at Course
                 </span>
                 <span className="border border-slate-300 bg-white px-3 py-2 text-xs font-medium text-slate-700">
                   Online &amp; in person
