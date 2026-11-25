@@ -144,9 +144,17 @@ function AllLecture() {
                 className="p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 hover:bg-slate-50 transition"
               >
                 <div className="flex items-center gap-4 min-w-0">
-                  <div className="w-12 h-12 shrink-0 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center text-xl">
-                    ♫
-                  </div>
+                  {lecture.imageUrl ? (
+                    <img
+                      src={lecture.imageUrl}
+                      alt={`${lecture.title} image`}
+                      className="w-12 h-12 shrink-0 rounded-xl object-cover"
+                    />
+                  ) : (
+                    <div className="w-12 h-12 shrink-0 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center text-xl">
+                      ♫
+                    </div>
+                  )}
 
                   <div className="min-w-0">
                     <h3 className="font-medium text-slate-900 truncate">
