@@ -7,6 +7,8 @@ import TajweedHeroArt from "./TajweedHeroArt";
 const formatPrice = (price) =>
   new Intl.NumberFormat("en-PK").format(Number(price) || 0);
 
+const currentYear = new Date().getFullYear();
+
 const tajweedStudents = [
   "احمد محمود",
   "مشیر احمد",
@@ -452,6 +454,67 @@ function PublicWebsite() {
           </div>
         </section>
       </main>
+
+      <footer className="bg-emerald-950 text-white">
+        <div className="mx-auto grid max-w-7xl gap-9 px-4 py-10 sm:grid-cols-2 sm:px-6 sm:py-12 lg:grid-cols-[1.4fr_0.7fr_0.9fr] lg:px-8">
+          <div className="sm:col-span-2 lg:col-span-1">
+            <a href="#home" className="inline-flex items-center gap-3">
+              <span className="grid h-11 w-11 place-items-center border border-emerald-700 text-sm font-bold tracking-wide text-amber-100">
+                AIA
+              </span>
+              <span className="text-lg font-semibold tracking-tight">
+                Aftab Islamic Academy
+              </span>
+            </a>
+            <p className="mt-4 text-sm text-emerald-100">
+              Quran learning with Qari Aftab.
+            </p>
+          </div>
+
+          <nav aria-label="Footer navigation">
+            <h2 className="text-xs font-semibold uppercase tracking-[0.14em] text-amber-200">
+              Explore
+            </h2>
+            <ul className="mt-4 space-y-3 text-sm text-emerald-100">
+              <li>
+                <a className="transition hover:text-white" href="#courses">
+                  Courses
+                </a>
+              </li>
+              <li>
+                <a className="transition hover:text-white" href="#students">
+                  Students
+                </a>
+              </li>
+              <li>
+                <a className="transition hover:text-white" href="#about">
+                  About the academy
+                </a>
+              </li>
+            </ul>
+          </nav>
+
+          <div>
+            <h2 className="text-xs font-semibold uppercase tracking-[0.14em] text-amber-200">
+              Contact
+            </h2>
+            <a
+              href="https://wa.me/923066972896"
+              target="_blank"
+              rel="noreferrer"
+              className="mt-4 inline-block text-sm text-emerald-100 transition hover:text-white"
+            >
+              WhatsApp: 0306 6972896
+            </a>
+          </div>
+        </div>
+
+        <div className="border-t border-emerald-800">
+          <div className="mx-auto max-w-7xl px-4 py-4 text-xs text-emerald-200 sm:px-6 lg:px-8">
+            © {currentYear} Aftab Islamic Academy
+          </div>
+        </div>
+      </footer>
 
       <a
         href="https://wa.me/923066972896"
