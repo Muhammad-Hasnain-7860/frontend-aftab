@@ -1,5 +1,5 @@
 
-import { NavLink, useParams } from "react-router";
+import { Link, NavLink, useParams } from "react-router";
 
 const Sidebar = () => {
   const { courseId } = useParams();
@@ -71,6 +71,14 @@ const Sidebar = () => {
           ))}
         </ul>
       </nav>
+
+      <Link
+        to="/"
+        className="mx-3 mb-3 mt-2 flex items-center gap-2 rounded-md border border-slate-200 px-3 py-2 text-sm font-medium text-slate-600 transition hover:border-emerald-700 hover:text-emerald-800 md:mt-auto"
+      >
+        <span aria-hidden="true">←</span>
+        Back to website
+      </Link>
     </aside>
   );
 };

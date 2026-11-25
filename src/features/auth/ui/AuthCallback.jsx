@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { authRefresh, getMe } from "../apis/auth.thunk";
 
 const AuthCallback = () => {
@@ -39,6 +39,12 @@ const AuthCallback = () => {
   return (
     <div className="min-h-screen bg-slate-50 flex items-center justify-center p-4">
       <div className="w-full max-w-md rounded-2xl bg-white p-8 text-center shadow-sm border border-slate-200">
+        <Link
+          to="/"
+          className="mb-6 inline-flex text-sm font-medium text-slate-600 hover:text-emerald-800"
+        >
+          ← Back to website
+        </Link>
         {loading ? (
           <>
             <div className="mx-auto h-12 w-12 rounded-full border-4 border-slate-200 border-t-blue-600 animate-spin" />

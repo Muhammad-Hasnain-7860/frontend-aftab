@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { getAllCourses } from "../apis/course.thunk";
 
 export default function Courses() {
@@ -36,12 +36,20 @@ export default function Courses() {
               </p>
             </div>
 
-            <button
-              onClick={() => navigate("/admin/courses/create")}
-              className="rounded-xl bg-emerald-600 cursor-pointer px-5 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-emerald-700"
-            >
-              + Create Course
-            </button>
+            <div className="flex flex-wrap items-center gap-3">
+              <Link
+                to="/"
+                className="rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm font-semibold text-slate-700 transition hover:border-emerald-700 hover:text-emerald-800"
+              >
+                Back to website
+              </Link>
+              <button
+                onClick={() => navigate("/admin/courses/create")}
+                className="cursor-pointer rounded-xl bg-emerald-700 px-5 py-3 text-sm font-semibold text-white transition hover:bg-emerald-800"
+              >
+                + Create Course
+              </button>
+            </div>
 
             {!loading && !error && courses.length > 0 && (
               <div className="flex w-fit items-center gap-3 rounded-xl border border-slate-200 bg-white px-4 py-3 shadow-sm">

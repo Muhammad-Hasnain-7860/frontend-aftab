@@ -1,5 +1,6 @@
 
 import { useState } from "react";
+import { Link } from "react-router";
 
 export default function Auth() {
   const [loading, setLoading] = useState(false);
@@ -13,6 +14,12 @@ export default function Auth() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-slate-50 px-4">
       <div className="w-full max-w-md rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
+        <Link
+          to="/"
+          className="mb-7 inline-flex items-center gap-2 text-sm font-medium text-slate-600 transition hover:text-emerald-800"
+        >
+          <span aria-hidden="true">←</span> Back to website
+        </Link>
 
         <div className="text-center">
           <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-xl bg-emerald-50 text-emerald-700">

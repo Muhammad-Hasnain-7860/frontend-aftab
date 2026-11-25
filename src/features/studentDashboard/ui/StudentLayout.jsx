@@ -14,11 +14,19 @@ function StudentLayout() {
           >
             Aftab Academy
           </Link>
-          <div className="min-w-0 text-right">
-            <p className="truncate text-sm font-medium">
-              {user?.displayName || "Student"}
-            </p>
-            <p className="text-xs text-slate-500">Student Dashboard</p>
+          <div className="flex items-center gap-4">
+            <div className="min-w-0 text-right">
+              <p className="truncate text-sm font-medium">
+                {user?.displayName || "Student"}
+              </p>
+              <p className="text-xs text-slate-500">Student Dashboard</p>
+            </div>
+            <Link
+              to="/"
+              className="shrink-0 rounded-lg border border-slate-200 px-3 py-2 text-xs font-medium text-slate-600 transition hover:border-emerald-700 hover:text-emerald-800 sm:text-sm"
+            >
+              Back to website
+            </Link>
           </div>
         </div>
       </header>
