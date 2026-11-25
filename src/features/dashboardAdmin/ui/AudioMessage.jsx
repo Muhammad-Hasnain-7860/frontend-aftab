@@ -23,13 +23,13 @@ const AudioMessage = ({ audioKey }) => {
   };
 
   return (
-    <div>
+    <div className="w-full min-w-0 max-w-[260px]">
       {!audioUrl ? (
         <button onClick={playAudio} disabled={loading}>
           {loading ? "Loading..." : "Play Audio"}
         </button>
       ) : (
-        <audio controls autoPlay src={audioUrl} />
+        <audio className="block h-10 w-full max-w-full" controls autoPlay src={audioUrl} />
       )}
     </div>
   );

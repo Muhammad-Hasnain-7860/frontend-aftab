@@ -342,7 +342,7 @@ function SessionChat() {
                       }`}
                     >
                       <div
-                        className={`max-w-[85%] sm:max-w-[75%] rounded-xl px-3 py-2.5 sm:px-4 sm:py-3 shadow-sm ${
+                        className={`min-w-0 max-w-[85%] sm:max-w-[75%] rounded-xl px-3 py-2.5 sm:px-4 sm:py-3 shadow-sm ${
                           isOwn
                             ? "bg-blue-600 text-white"
                             : "bg-white text-slate-800 border border-slate-200"
