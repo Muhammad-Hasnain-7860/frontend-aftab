@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router";
 import { axiosInstance } from "../../../app/api/axiosInstance";
+import LectureImagePreview from "../../lecture/ui/LectureImagePreview";
 
 function StudentCourse() {
   const { courseId } = useParams();
@@ -166,15 +167,15 @@ function StudentCourse() {
                 key={lecture._id}
                 className="flex flex-col gap-4 rounded-xl border border-slate-200 bg-white p-4 sm:flex-row sm:items-center sm:justify-between sm:p-5"
               >
-                <div className="flex min-w-0 items-start gap-3">
+                <div className="flex min-w-0 flex-1 flex-col gap-3 sm:flex-row sm:items-center">
                   {lecture.imageUrl && (
-                    <img
-                      src={lecture.imageUrl}
-                      alt={`${lecture.title} image`}
-                      className="h-16 w-16 shrink-0 rounded-lg object-cover"
+                    <LectureImagePreview
+                      imageUrl={lecture.imageUrl}
+                      title={lecture.title}
+                      className="sm:w-56"
                     />
                   )}
-                  <div className="min-w-0">
+                  <div className="min-w-0 flex-1">
                     <h3 className="font-semibold">{lecture.title}</h3>
                     {lecture.description && (
                       <p className="mt-1 text-sm leading-6 text-slate-600">

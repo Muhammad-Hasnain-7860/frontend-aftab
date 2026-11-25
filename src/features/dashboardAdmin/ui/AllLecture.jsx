@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { axiosInstance } from "../../../app/api/axiosInstance";
 import { useNavigate, useParams } from "react-router";
+import LectureImagePreview from "../../lecture/ui/LectureImagePreview";
 
 function AllLecture() {
   const [lectures, setLectures] = useState([]);
@@ -143,20 +144,20 @@ function AllLecture() {
                 key={lecture._id}
                 className="p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 hover:bg-slate-50 transition"
               >
-                <div className="flex items-center gap-4 min-w-0">
+                <div className="flex min-w-0 flex-1 flex-col gap-3 sm:flex-row sm:items-center">
                   {lecture.imageUrl ? (
-                    <img
-                      src={lecture.imageUrl}
-                      alt={`${lecture.title} image`}
-                      className="w-12 h-12 shrink-0 rounded-xl object-cover"
+                    <LectureImagePreview
+                      imageUrl={lecture.imageUrl}
+                      title={lecture.title}
+                      className="sm:w-52"
                     />
                   ) : (
-                    <div className="w-12 h-12 shrink-0 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center text-xl">
+                    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-emerald-50 text-xl text-emerald-700">
                       ♫
                     </div>
                   )}
 
-                  <div className="min-w-0">
+                  <div className="min-w-0 flex-1">
                     <h3 className="font-medium text-slate-900 truncate">
                       {lecture.title}
                     </h3>
