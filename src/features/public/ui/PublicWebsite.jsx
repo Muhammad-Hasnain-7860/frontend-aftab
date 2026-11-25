@@ -200,37 +200,37 @@ function PublicWebsite() {
 
         <section
           id="courses"
-          className="scroll-mt-8 border-b border-slate-200 px-4 py-14 sm:px-6 sm:py-16 lg:px-8"
+          className="scroll-mt-8 border-b border-slate-200 bg-[#f4f2e9] px-4 py-14 sm:px-6 sm:py-16 lg:px-8"
         >
           <div className="mx-auto max-w-7xl">
-            <div className="flex flex-col gap-3 border-b border-slate-200 pb-6 sm:flex-row sm:items-end sm:justify-between">
+            <div className="flex flex-col gap-4 border-b border-slate-300 pb-7 sm:flex-row sm:items-end sm:justify-between">
               <div>
                 <p className="text-xs font-semibold uppercase tracking-[0.16em] text-emerald-800">
-                  Study with us
+                  Course catalogue
                 </p>
-                <h2 className="mt-2 text-3xl font-semibold tracking-tight text-slate-950">
-                  Available courses
+                <h2 className="mt-2 max-w-2xl font-serif text-3xl font-semibold tracking-tight text-slate-950 sm:text-4xl">
+                  Choose your Quran learning path.
                 </h2>
-                <p className="mt-2 max-w-xl text-sm leading-6 text-slate-600 sm:text-base">
-                  Explore Tajweed and Quran learning courses offered by the
-                  academy.
+                <p className="mt-3 max-w-2xl text-sm leading-6 text-slate-600 sm:text-base">
+                  Explore Tajweed and Hifz courses, see the fees upfront, and
+                  choose how you would like to learn.
                 </p>
               </div>
               {!loading && !error && (
-                <p className="text-sm text-slate-500">
+                <p className="shrink-0 text-sm font-medium text-slate-600">
                   {courses.length} {courses.length === 1 ? "course" : "courses"}
                 </p>
               )}
             </div>
 
             {loading ? (
-              <div className="mt-7 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+              <div className="mt-8 grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
                 {[1, 2, 3].map((item) => (
                   <div
                     key={item}
-                    className="animate-pulse border border-slate-200 bg-white"
+                    className="animate-pulse overflow-hidden border border-slate-200 bg-white"
                   >
-                    <div className="aspect-[16/10] bg-slate-100" />
+                    <div className="aspect-[16/9] bg-slate-200" />
                     <div className="space-y-3 p-5">
                       <div className="h-5 w-2/3 bg-slate-100" />
                       <div className="h-4 bg-slate-100" />
@@ -240,7 +240,7 @@ function PublicWebsite() {
                 ))}
               </div>
             ) : error ? (
-              <div className="mt-7 border border-red-200 bg-white p-6">
+              <div className="mt-8 border border-red-200 bg-white p-6">
                 <p className="font-semibold text-slate-900">
                   Courses could not be loaded
                 </p>
@@ -254,50 +254,66 @@ function PublicWebsite() {
                 </button>
               </div>
             ) : courses.length === 0 ? (
-              <p className="mt-7 border border-slate-200 bg-[#f7f6f1] px-5 py-12 text-center text-sm text-slate-600">
+              <p className="mt-8 border border-slate-300 bg-white px-5 py-12 text-center text-sm text-slate-600">
                 No courses are available right now. Please check back soon.
               </p>
             ) : (
-              <div className="mt-7 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+              <div className="mt-8 grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
                 {courses.map((course) => (
                   <article
                     key={course._id}
-                    className="flex h-full flex-col border border-slate-200 bg-white transition-colors hover:border-emerald-800/40"
+                    className="group flex h-full flex-col overflow-hidden border border-slate-200 bg-white shadow-sm transition duration-200 hover:-translate-y-1 hover:border-emerald-900/40 hover:shadow-lg"
                   >
-                    {course.thumbnail ? (
-                      <img
-                        src={course.thumbnail}
-                        alt={course.title}
-                        loading="lazy"
-                        className="aspect-[16/10] w-full object-cover"
-                      />
-                    ) : (
-                      <div className="flex aspect-[16/10] items-center justify-center bg-[#f1f3ed] text-sm font-medium text-emerald-900">
-                        Aftab Islamic Academy
-                      </div>
-                    )}
-                    <div className="flex flex-1 flex-col p-5">
-                      <h3 className="text-lg font-semibold tracking-tight text-slate-950">
-                        {course.title}
-                      </h3>
-                      <p className="mt-2 line-clamp-3 min-h-[4.5rem] text-sm leading-6 text-slate-600">
-                        {course.description ||
-                          "Quran learning with Qari Aftab."}
-                      </p>
-                      <div className="mt-5 flex items-center justify-between border-t border-slate-200 pt-4">
-                        <span className="text-sm text-slate-500">Course fee</span>
-                        <span className="font-semibold text-slate-900">
-                          Rs. {formatPrice(course.price)}
+                    <div className="relative aspect-[16/9] overflow-hidden bg-[#e6e5d8]">
+                      {course.thumbnail ? (
+                        <img
+                          src={course.thumbnail}
+                          alt={course.title}
+                          loading="lazy"
+                          className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.03]"
+                        />
+                      ) : (
+                        <TajweedHeroArt />
+                      )}
+                      <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-3 bg-gradient-to-t from-emerald-950/85 to-transparent px-4 pb-4 pt-12 text-white">
+                        <span className="text-xs font-medium uppercase tracking-wide text-emerald-50">
+                          Quran course
+                        </span>
+                        <span className="text-xs font-medium text-amber-100">
+                          Qari Aftab
                         </span>
                       </div>
-                      <button
-                        type="button"
-                        onClick={goToAccount}
-                        disabled={!initialized}
-                        className="mt-5 min-h-10 rounded-lg border border-emerald-900 px-4 text-sm font-medium text-emerald-950 transition hover:bg-emerald-900 hover:text-white disabled:cursor-wait disabled:opacity-70"
-                      >
-                        {initialized ? accountAction : "Checking..."}
-                      </button>
+                    </div>
+                    <div className="flex flex-1 flex-col p-5 sm:p-6">
+                      <p className="text-xs font-semibold uppercase tracking-[0.14em] text-emerald-800">
+                        Aftab Islamic Academy
+                      </p>
+                      <h3 className="mt-2 font-serif text-2xl font-semibold leading-tight tracking-tight text-slate-950">
+                        {course.title}
+                      </h3>
+                      <p className="mt-3 line-clamp-3 min-h-[4.5rem] text-sm leading-6 text-slate-600">
+                        {course.description ||
+                          "Learn Quran recitation and Tajweed with the academy."}
+                      </p>
+                      <div className="mt-auto">
+                        <div className="mt-5 border-t border-slate-200 pt-4">
+                          <p className="text-xs font-medium uppercase tracking-wide text-slate-500">
+                            Course fee
+                          </p>
+                          <p className="mt-1 text-2xl font-semibold tracking-tight text-emerald-950">
+                            Rs. {formatPrice(course.price)}
+                          </p>
+                        </div>
+                        <button
+                          type="button"
+                          onClick={goToAccount}
+                          disabled={!initialized}
+                          className="mt-5 inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-lg bg-emerald-900 px-4 text-sm font-semibold text-white transition hover:bg-emerald-800 disabled:cursor-wait disabled:opacity-70"
+                        >
+                          {initialized ? accountAction : "Checking..."}
+                          <span aria-hidden="true">→</span>
+                        </button>
+                      </div>
                     </div>
                   </article>
                 ))}
@@ -372,6 +388,32 @@ function PublicWebsite() {
           </div>
         </section>
       </main>
+
+      <a
+        href="https://wa.me/923066972896"
+        target="_blank"
+        rel="noreferrer"
+        aria-label="Chat with Aftab Islamic Academy on WhatsApp"
+        title="Chat on WhatsApp"
+        className="group fixed bottom-5 right-5 z-40 grid h-14 w-14 place-items-center rounded-full bg-[#168c54] text-white shadow-lg shadow-emerald-950/20 transition hover:-translate-y-1 hover:bg-[#117444] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-900 sm:bottom-7 sm:right-7 sm:h-16 sm:w-16"
+      >
+        <span className="pointer-events-none absolute right-full mr-3 whitespace-nowrap bg-white px-3 py-2 text-sm font-medium text-slate-800 opacity-0 shadow-md transition group-hover:opacity-100 group-focus-visible:opacity-100">
+          Chat on WhatsApp
+        </span>
+        <svg
+          aria-hidden="true"
+          className="h-7 w-7"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1.8"
+        >
+          <path d="M20.2 11.7a8.2 8.2 0 0 1-12.1 7.2L4 20l1.2-4.1a8.2 8.2 0 1 1 15-4.2Z" />
+          <path d="M9 8.2c.2-.5.4-.5.7-.5h.5c.2 0 .4 0 .5.4l.8 1.9c.1.2.1.4 0 .6l-.5.7c-.2.2-.2.3-.1.5.2.4.7 1.1 1.4 1.7.8.7 1.5 1 1.9 1.2.2.1.4.1.5-.1l.7-.8c.2-.2.4-.3.6-.2l1.8.9c.3.1.4.2.4.4 0 .3-.2 1.2-.8 1.7-.5.5-1.2.7-1.8.6-.5-.1-1.2-.3-2.1-.7-1.1-.5-2-1.2-2.9-2.1-.8-.8-1.5-1.8-1.9-2.7-.4-.9-.6-1.7-.6-2.2 0-.6.3-1.1.9-1.5Z" />
+        </svg>
+      </a>
 
       <footer className="border-t border-slate-200 bg-[#f7f6f1] px-4 py-6 sm:px-6 lg:px-8">
         <div className="mx-auto flex max-w-7xl flex-col gap-3 text-sm text-slate-600 sm:flex-row sm:items-center sm:justify-between">
