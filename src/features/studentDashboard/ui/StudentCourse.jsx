@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router";
 import { axiosInstance } from "../../../app/api/axiosInstance";
 import LectureImagePreview from "../../lecture/ui/LectureImagePreview";
+import AudioPlayer from "../../lecture/ui/AudioPlayer";
 
 function StudentCourse() {
   const { courseId } = useParams();
@@ -186,9 +187,9 @@ function StudentCourse() {
                 </div>
                 <div className="shrink-0">
                   {audioUrls[lecture._id] ? (
-                    <audio
-                      controls
+                    <AudioPlayer
                       src={audioUrls[lecture._id]}
+                      preload="none"
                       className="w-full sm:w-64"
                     />
                   ) : (
@@ -196,8 +197,30 @@ function StudentCourse() {
                       type="button"
                       onClick={() => handlePlayAudio(lecture)}
                       disabled={loadingAudioId === lecture._id}
-                      className="rounded-lg bg-emerald-700 px-4 py-2.5 text-sm font-medium text-white hover:bg-emerald-800 disabled:cursor-not-allowed disabled:opacity-60"
+                      className="inline-flex items-center gap-2 rounded-lg bg-emerald-700 px-4 py-2.5 text-sm font-medium text-white hover:bg-emerald-800 disabled:cursor-wait disabled:opacity-60"
                     >
+                      {loadingAudioId === lecture._id && (
+                        <svg
+                          aria-hidden="true"
+                          className="h-4 w-4 animate-spin"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                        >
+                          <circle
+                            className="opacity-25"
+                            cx="12"
+                            cy="12"
+                            r="9"
+                            stroke="currentColor"
+                            strokeWidth="3"
+                          />
+                          <path
+                            className="opacity-75"
+                            fill="currentColor"
+                            d="M12 3a9 9 0 0 1 9 9h-3a6 6 0 0 0-6-6V3Z"
+                          />
+                        </svg>
+                      )}
                       {loadingAudioId === lecture._id ? "Loading..." : "Play lecture"}
                     </button>
                   )}

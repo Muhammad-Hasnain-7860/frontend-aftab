@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { axiosInstance } from "../../../app/api/axiosInstance";
 import { useNavigate, useParams } from "react-router";
 import LectureImagePreview from "../../lecture/ui/LectureImagePreview";
+import AudioPlayer from "../../lecture/ui/AudioPlayer";
 
 function AllLecture() {
   const [lectures, setLectures] = useState([]);
@@ -10,6 +11,7 @@ function AllLecture() {
   const [search, setSearch] = useState("");
   const [error, setError] = useState("");
   const [audioUrls, setAudioUrls] = useState({});
+  const [loadingAudioId, setLoadingAudioId] = useState("");
 
     const { courseId } = useParams();
 
@@ -36,6 +38,7 @@ function AllLecture() {
   const handlePlayAudio = async (lecture) => {
     try {
       setError("");
+      setLoadingAudioId(lecture._id);
 
       const response = await axiosInstance.get("/audio/audio-url", {
         params: { key: lecture.audioKey },
@@ -49,6 +52,8 @@ function AllLecture() {
       setError(
         error.response?.data?.message || "Failed to load audio."
       );
+    } finally {
+      setLoadingAudioId("");
     }
   };
 
@@ -171,17 +176,40 @@ function AllLecture() {
 
                 {!audioUrls[lecture._id] ? (
                   <button
+                    type="button"
                     onClick={() => handlePlayAudio(lecture)}
-                    className="px-4 py-2.5 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white text-sm font-medium"
+                    disabled={loadingAudioId === lecture._id}
+                    className="inline-flex items-center gap-2 rounded-xl bg-emerald-700 px-4 py-2.5 text-sm font-medium text-white hover:bg-emerald-800 disabled:cursor-wait disabled:opacity-70"
                   >
-                    Get Audio
+                    {loadingAudioId === lecture._id && (
+                      <svg
+                        aria-hidden="true"
+                        className="h-4 w-4 animate-spin"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                      >
+                        <circle
+                          className="opacity-25"
+                          cx="12"
+                          cy="12"
+                          r="9"
+                          stroke="currentColor"
+                          strokeWidth="3"
+                        />
+                        <path
+                          className="opacity-75"
+                          fill="currentColor"
+                          d="M12 3a9 9 0 0 1 9 9h-3a6 6 0 0 0-6-6V3Z"
+                        />
+                      </svg>
+                    )}
+                    {loadingAudioId === lecture._id ? "Loading..." : "Get Audio"}
                   </button>
                 ) : (
-                  <audio
-                    controls
-                    preload="none"
+                  <AudioPlayer
                     src={audioUrls[lecture._id]}
-                    className="w-full sm:w-64 h-10"
+                    preload="none"
+                    className="w-full sm:w-64"
                   />
                 )}
               </div>
