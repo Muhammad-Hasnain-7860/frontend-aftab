@@ -245,6 +245,18 @@ function PublicWebsite() {
                   Explore Tajweed and Hifz courses, see the fees upfront, and
                   choose how you would like to learn.
                 </p>
+                <p className="mt-3 text-sm text-slate-700">
+                  To purchase a course,{" "}
+                  <a
+                    href="https://wa.me/923066972896?text=Assalam-o-Alaikum%2C%20mujhe%20course%20ke%20bare%20mein%20maloomat%20chahiye."
+                    target="_blank"
+                    rel="noreferrer"
+                    className="font-semibold text-emerald-900 underline decoration-emerald-700 underline-offset-4 hover:text-emerald-700"
+                  >
+                    contact us on WhatsApp: 0306 6972896
+                  </a>
+                  .
+                </p>
               </div>
               {!loading && !error && (
                 <p className="shrink-0 text-sm font-medium text-slate-600">
