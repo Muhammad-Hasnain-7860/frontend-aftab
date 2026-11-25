@@ -415,15 +415,7 @@ function PublicWebsite() {
         </svg>
       </a>
 
-      <footer className="border-t border-slate-200 bg-[#f7f6f1] px-4 py-6 sm:px-6 lg:px-8">
-        <div className="mx-auto flex max-w-7xl flex-col gap-3 text-sm text-slate-600 sm:flex-row sm:items-center sm:justify-between">
-          <p className="font-semibold text-slate-900">Aftab Islamic Academy</p>
-          <p>Quran education with Qari Aftab.</p>
-          <a href="#home" className="font-medium text-emerald-900 hover:underline">
-            Back to top
-          </a>
-        </div>
-      </footer>
+     
     </div>
   );
 }
