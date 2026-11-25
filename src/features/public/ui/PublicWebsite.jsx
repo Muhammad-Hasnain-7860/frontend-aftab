@@ -7,6 +7,30 @@ import TajweedHeroArt from "./TajweedHeroArt";
 const formatPrice = (price) =>
   new Intl.NumberFormat("en-PK").format(Number(price) || 0);
 
+const tajweedStudents = [
+  "احمد محمود",
+  "مشیر احمد",
+  "دلشیر علی",
+  "خلیل احمد",
+  "محمد محدث",
+  "محمد عاصم",
+  "عمران عطاری",
+  "مولانا عبدالغنی",
+  "الطاف حسین عطاری",
+  "محمد دین",
+  "نعمان علی",
+  "سرفراز عطاری",
+  "منیر علی",
+  "عرفان قادری",
+  "عبدالجبار مدنی",
+  "حافظ مزمل",
+  "حافظ غلام اللہ",
+  "حافظ مقصود",
+  "حافظ محمد شاہ جہان",
+  "حافظ اللہ بخش قادری",
+  "حافظ محمد طیب",
+];
+
 const fetchPublicCourses = async () => {
   const response = await axiosInstance.get("/course/public");
   return response.data.data || [];
@@ -93,6 +117,9 @@ function PublicWebsite() {
                 </a>
                 <a className="transition hover:text-emerald-800" href="#courses">
                   Courses
+                </a>
+                <a className="transition hover:text-emerald-800" href="#students">
+                  Students
                 </a>
                 <a className="transition hover:text-emerald-800" href="#about">
                   About
@@ -319,6 +346,43 @@ function PublicWebsite() {
                 ))}
               </div>
             )}
+          </div>
+        </section>
+
+        <section
+          id="students"
+          className="relative scroll-mt-8 overflow-hidden bg-emerald-950 px-4 py-14 text-white sm:px-6 sm:py-16 lg:px-8"
+        >
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute -right-32 -top-40 h-96 w-96 rounded-full bg-emerald-800/40 blur-3xl"
+          />
+          <div className="relative mx-auto max-w-7xl">
+            <h2
+              lang="ar"
+              dir="rtl"
+              className="mb-2 text-center font-serif text-3xl font-semibold text-amber-100 sm:text-4xl"
+            >
+              تخصص في التجويد
+            </h2>
+            <p className="mb-6 text-center text-sm text-emerald-100 sm:mb-8 sm:text-base">
+              A few of Qari Aftab&apos;s students are shown here.
+            </p>
+
+            <div className="border border-emerald-900 bg-[#f4f2e9] p-4 text-slate-900 sm:p-6">
+              <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                {tajweedStudents.map((name) => (
+                  <p
+                    key={name}
+                    lang="ur"
+                    dir="rtl"
+                    className="border border-slate-200 bg-white px-4 py-3 text-right font-serif text-lg font-semibold text-slate-900 sm:text-xl"
+                  >
+                    {name}
+                  </p>
+                ))}
+              </div>
+            </div>
           </div>
         </section>
 
