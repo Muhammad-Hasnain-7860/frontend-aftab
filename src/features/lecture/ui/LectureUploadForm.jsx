@@ -4,6 +4,7 @@ import { lectureCreateApi } from "../apis/LectureApi";
 import { useNavigate, useParams } from "react-router";
 
 const MAX_AUDIO_MB = 30;
+const MAX_IMAGE_MB = 30;
 
 const inputBase =
   "w-full rounded-lg border bg-white px-4 py-2.5 text-sm text-gray-900 placeholder:text-gray-400 outline-none transition focus:ring-2";
@@ -51,21 +52,24 @@ const  LectureUploadForm = () => {
 
   const descriptionLength = watch("description")?.length || 0;
   const audioFile = watch("audio")?.[0];
+  const imageFile = watch("image")?.[0];
 
   const onSubmit = async (data) => {
     const formData = new FormData();
     formData.append("title", data.title.trim());
     formData.append("description", data.description.trim());
     formData.append('courseId' , courseId)
-    console.log(data.audio[0])
     formData.append("audio", data.audio[0]);
+    if (data.image?.[0]) {
+      formData.append("image", data.image[0]);
+    }
 
     try {
       await lectureCreateApi(formData);
       toast.success("Lecture uploaded successfully");
       reset();
     } catch (err) {
-      toast.error(err.response.data.error || err.message);
+      toast.error(err.response?.data?.msg || err.message);
     }
   };
 
@@ -132,6 +136,57 @@ const  LectureUploadForm = () => {
             })}
             className={`${inputClass(errors.description)} resize-none`}
           />
+        </Field>
+      </div>
+
+      <div className="border-t border-gray-200" />
+
+      {/* Optional image */}
+      <div className="space-y-5 p-6">
+        <div>
+          <h2 className="text-base font-semibold text-gray-900">
+            Lecture image (optional)
+          </h2>
+          <p className="mt-0.5 text-sm text-gray-500">
+            Image upload karein, maximum {MAX_IMAGE_MB} MB.
+          </p>
+        </div>
+
+        <Field label="Upload image" error={errors.image?.message}>
+          <label className="flex cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 px-6 py-8 text-center transition hover:border-emerald-600 hover:bg-emerald-50/50">
+            <input
+              type="file"
+              accept="image/*"
+              className="sr-only"
+              {...register("image", {
+                validate: {
+                  imageOnly: (files) =>
+                    !files?.[0] ||
+                    files[0].type.startsWith("image/") ||
+                    "Sirf image files allowed hain",
+                  maxSize: (files) =>
+                    !files?.[0] ||
+                    files[0].size <= MAX_IMAGE_MB * 1024 * 1024 ||
+                    `Image ${MAX_IMAGE_MB} MB se chhoti honi chahiye`,
+                },
+              })}
+            />
+            {imageFile ? (
+              <>
+                <span className="text-sm font-medium text-gray-900">
+                  {imageFile.name}
+                </span>
+                <span className="mt-1 text-xs text-gray-500">
+                  {formatSize(imageFile.size)} · Change karne ke liye click
+                  karein
+                </span>
+              </>
+            ) : (
+              <span className="text-sm font-medium text-emerald-700">
+                Click karke image select karein
+              </span>
+            )}
+          </label>
         </Field>
       </div>
 
